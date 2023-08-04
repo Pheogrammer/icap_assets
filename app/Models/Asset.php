@@ -11,8 +11,8 @@ class Asset extends Model
     protected $table = 'assets';
 
     protected $fillable = ['assetName', 'kind', 'purchase_date', 'status', 'added_by'];
-    public function assets()
+    public function kind()
     {
-        return $this->hasMany(Asset::class, 'kind_id'); 
+        return $this->belongsTo(Kind::class, 'kind_id');
     }
 }

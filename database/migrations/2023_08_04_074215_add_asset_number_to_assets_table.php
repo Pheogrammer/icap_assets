@@ -1,22 +1,18 @@
 <?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateKindsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
-        Schema::create('kinds', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-
-            $table->timestamps();
+        Schema::table('assets', function (Blueprint $table) {
+            $table->string('asset_number')->unique()->after('id');
         });
     }
 
@@ -27,6 +23,8 @@ class CreateKindsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kinds');
+        Schema::table('assets', function (Blueprint $table) {
+            $table->dropColumn('asset_number');
+        });
     }
-}
+};

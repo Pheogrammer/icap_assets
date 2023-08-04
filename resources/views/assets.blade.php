@@ -57,8 +57,8 @@
                                 @foreach ($assets as $item)
                                     <tr>
                                         <td>{{ $i }}</td>
-                                        <td>{{ $item->assetName }}</td>
-                                        <td>{{ $item->kind }}</td>
+                                        <td>{{ $item->asset_name }}</td>
+                                        <td>{{ $item->kind->name }}</td>
                                         <td>{{ $item->purchase_date }}</td>
                                         <td>{{ $item->status }}</td>
                                         <td>

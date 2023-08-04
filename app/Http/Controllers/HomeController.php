@@ -56,7 +56,7 @@ class HomeController extends Controller
     }
     public function assets()
     {
-        $assets = Asset::all();
+        $assets = Asset::with('kind')->get();
         return view('assets', compact('assets'));
     }
     public function registerNewAsset()
@@ -77,8 +77,8 @@ class HomeController extends Controller
 
         $asset = new Asset();
         $asset->asset_number = $request->input('asset_number');
-        $asset->assetName = $request->input('asset_name');
-        $asset->kind = $request->input('asset_kind');
+        $asset->asset_name = $request->input('asset_name');
+        $asset->kind_id = $request->input('asset_kind');
         $asset->purchase_date = $request->input('purchase_date');
         $asset->status = $request->input('asset_status');
         $asset->added_by = Auth()->user()->id;
