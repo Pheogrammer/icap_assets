@@ -22,3 +22,6 @@ Route::post('saveregisteredAsset',[HomeController::class, 'saveregisteredAsset']
 Route::get('editAsset/{id}',[HomeController::class, 'editAsset'])->name('editAsset');
 Route::post('updateAsset',[HomeController::class, 'updateAsset'])->name('updateAsset');
 Route::get('deleteAsset/{id}',[HomeController::class, 'deleteAsset'])->name('deleteAsset');
+
+Route::get('deletedAssets', [HomeController::class, 'deletedAssets'])->name('deletedAssets');
+Route::get('activateAsset/{id}',[HomeController::class, 'activateAsset'])->name('activateAsset');

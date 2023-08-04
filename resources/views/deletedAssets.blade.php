@@ -8,14 +8,10 @@
                     <div class="card-header">
                         <div class="row ${1| ,row-cols-2,row-cols-3, auto,justify-content-md-center,|}">
                             <div class="col">
-                                {{ __('Registered Assets') }}
-                            </div>
-
-                            <div class="col">
-                                <a href="{{ route('deletedAssets') }}" class="btn btn-primary float-end">Deleted Assets</a>
+                                {{ __('Deleted Assets') }}
                             </div>
                             <div class="col">
-                                <a href="{{ route('registerNewAsset') }}" class="btn btn-primary float-end">Add New Asset</a>
+                                <a href="{{ route('assets') }}" class="btn btn-primary float-end">Other Assets</a>
                             </div>
                         </div>
                     </div>
@@ -74,7 +70,7 @@
                                         <td>{{ $item->status }}</td>
                                         <td>
                                             <a href="{{route('editAsset',$item->id)}}" class="btn btn-primary">Edit</a>
-                                            <a href="{{ route('deleteAsset', $item->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this asset?')">Delete</a>
+                                            <a href="{{ route('activateAsset', $item->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to Un-delete this asset?')">Un-Delete</a>
                                         </td>
                                         @php
                                             $i++;

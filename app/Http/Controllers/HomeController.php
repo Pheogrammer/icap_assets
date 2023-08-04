@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Asset;
 use App\Models\Kind;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 class HomeController extends Controller
 {
     /**
@@ -56,9 +57,13 @@ class HomeController extends Controller
     }
     public function assets()
     {
-        $assets = Asset::with('kind')->get();
+        $assets = Asset::with('kind')
+            ->whereNull('date_deleted')
+            ->get();
+
         return view('assets', compact('assets'));
     }
+
     public function registerNewAsset()
     {
         $kinds = Kind::all();
@@ -125,10 +130,44 @@ class HomeController extends Controller
     {
         try {
             $asset = Asset::findOrFail($id);
-            $asset->delete();
-            return redirect('assets')->with('success', 'Asset Deleted successfully!');
+
+            if ($asset->date_deleted === null) {
+                $asset->date_deleted = now();
+                $asset->save();
+                return redirect('assets')->with('success', 'Asset Deleted successfully!');
+            } else {
+                return redirect('assets')->with('error', 'Asset is already deleted.');
+            }
         } catch (ModelNotFoundException $e) {
             return redirect('assets')->with('error', 'Asset not found.');
         }
     }
+
+    public function deletedAssets()
+    {
+        $assets = Asset::with('kind')
+            ->whereNotNull('date_deleted')
+            ->get();
+
+        return view('deletedAssets', compact('assets'));
+    }
+
+
+    public function activateAsset($id)
+    {
+        try {
+            $asset = Asset::findOrFail($id);
+
+            if ($asset->date_deleted !== null) {
+                $asset->date_deleted = null;
+                $asset->save();
+                return redirect('assets')->with('success', 'Asset Activated successfully!');
+            } else {
+                return redirect('assets')->with('error', 'Asset is already Activated.');
+            }
+        } catch (ModelNotFoundException $e) {
+            return redirect('assets')->with('error', 'Asset not found.');
+        }
+    }
+
 }
