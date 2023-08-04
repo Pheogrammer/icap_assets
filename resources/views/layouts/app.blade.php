@@ -33,6 +33,7 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
                     <!-- Left Side Of Navbar -->
                     @guest
                     @else
@@ -45,6 +46,9 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('assets') }}">{{ __('Assets') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('reports') }}">{{ __('Reports') }}</a>
                             </li>
                         </ul>
                     @endguest

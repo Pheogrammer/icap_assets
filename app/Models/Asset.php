@@ -15,4 +15,5 @@ class Asset extends Model
     {
         return $this->belongsTo(Kind::class, 'kind_id');
     }
+    
 }

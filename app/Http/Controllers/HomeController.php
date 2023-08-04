@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Asset;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 use App\Models\Kind;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-
 class HomeController extends Controller
 {
     /**
@@ -168,6 +169,32 @@ class HomeController extends Controller
         } catch (ModelNotFoundException $e) {
             return redirect('assets')->with('error', 'Asset not found.');
         }
+    }
+
+    public function reports()
+    {
+       $kinds = Kind::get();
+
+        return view('reports', compact('kinds'));
+
+    }
+
+    public function generateRegisteredAssetsReport()
+    {
+        $assets = Asset::with('kind')
+            ->whereNull('date_deleted')
+            ->get();
+        $pdf = Pdf::loadView('RegisteredAssetsReport', compact('assets'));
+        return $pdf->stream('report.pdf');
+    }
+
+    public function generateDeletedAssetsReport()
+    {
+        $assets = Asset::with('kind')
+            ->whereNull('date_deleted')
+            ->get();
+        $pdf = Pdf::loadView('RegisteredAssetsReport', compact('assets'));
+        return $pdf->stream('report.pdf');
     }
 
 }
