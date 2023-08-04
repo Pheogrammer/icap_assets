@@ -39,7 +39,7 @@
                             </div>
                         @endif
 
-                        <form action="{{ route('saveregisteredUser') }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('saveregisteredAsset') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
                                 <label for="">Asset Name</label>
@@ -50,14 +50,14 @@
                             <br>
                             <div class="form-group">
                                 <label for="">Asset Number</label>
-                                <input type="text" name="asset_name" required id=""
+                                <input type="text" name="asset_number" required id=""
                                     value="{{ old('asset_number') }}" class="form-control" placeholder="Asset Number"
                                     aria-describedby="helpId">
                             </div>
                             <br>
                             <div class="form-group">
                                 <label for="">Asset Kind</label>
-                                <select type="date" name="asset_status" required id=""
+                                <select type="date" name="asset_kind" required id=""
                                     value="{{ old('asset_kind') }}" class="form-control" placeholder="Asset Kind"
                                     aria-describedby="helpId">
                                     <option value="" selected>Select Asset Kind</option>

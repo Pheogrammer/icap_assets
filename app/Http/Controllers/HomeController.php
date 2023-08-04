@@ -65,5 +65,30 @@ class HomeController extends Controller
         return view('registerAssets', compact('kinds'));
     }
 
-    
+    public function saveregisteredAsset(Request $request)
+    {
+        $request->validate([
+            'asset_number' => 'required|unique:assets',
+            'asset_name' => 'required|string',
+            'asset_kind' => 'required',
+            'asset_status' => 'required',
+            'purchase_date' => 'required|date',
+        ]);
+
+        $asset = new Asset();
+        $asset->asset_number = $request->input('asset_number');
+        $asset->assetName = $request->input('asset_name');
+        $asset->kind = $request->input('asset_kind');
+        $asset->purchase_date = $request->input('purchase_date');
+        $asset->status = $request->input('asset_status');
+        $asset->added_by = Auth()->user()->id;
+
+        $asset->save();
+
+
+
+        $asset->save();
+        return redirect('assets')->with('success', 'Asset registered successfully!');
+
+    }
 }
