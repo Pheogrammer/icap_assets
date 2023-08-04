@@ -22,6 +22,11 @@
                                 </ul>
                             </div>
                         @endif
+                        @if (session('success'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                         @if (Session::has('message'))
                             <div class="alert alert-success">
                                 <ul>

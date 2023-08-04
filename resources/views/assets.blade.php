@@ -22,6 +22,11 @@
                                 {{ session('status') }}
                             </div>
                         @endif
+                        @if (session('success'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                         @if ($errors->any())
                             <div class="alert alert-danger">
                                 <ul>
@@ -44,6 +49,7 @@
                                 <tr>
                                     <th>SN</th>
                                     <th>Name</th>
+                                    <th>Asset Number</th>
                                     <th>Kind</th>
                                     <th>Purchased On</th>
                                     <th>Status</th>
@@ -58,12 +64,13 @@
                                     <tr>
                                         <td>{{ $i }}</td>
                                         <td>{{ $item->asset_name }}</td>
+                                        <td>{{$item->asset_number}}</td>
                                         <td>{{ $item->kind->name }}</td>
                                         <td>{{ $item->purchase_date }}</td>
                                         <td>{{ $item->status }}</td>
                                         <td>
-                                            <a href="" class="btn btn-primary">Edit</a>
-                                            <a href="" class="btn btn-danger">Delete</a>
+                                            <a href="{{route('editAsset',$item->id)}}" class="btn btn-primary">Edit</a>
+                                            <a href="{{ route('deleteAsset', $item->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this asset?')">Delete</a>
                                         </td>
                                         @php
                                             $i++;

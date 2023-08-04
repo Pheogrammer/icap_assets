@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Asset;
 use App\Models\Kind;
-
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 class HomeController extends Controller
 {
     /**
@@ -85,10 +85,50 @@ class HomeController extends Controller
 
         $asset->save();
 
-
-
-        $asset->save();
         return redirect('assets')->with('success', 'Asset registered successfully!');
 
+    }
+
+    public function editAsset($id)
+    {
+        $asset = Asset::where('id', $id)->with('kind')->first();
+        $kinds = Kind::all();
+        return view('editAsset', compact('asset', 'kinds'));
+
+    }
+
+    public function updateAsset(Request $request)
+    {
+        $request->validate([
+            'asset_number' => 'required|unique:assets',
+            'asset_name' => 'required|string',
+            'asset_kind' => 'required',
+            'asset_status' => 'required',
+            'purchase_date' => 'required|date',
+        ]);
+
+        $asset = Asset::where('id', $request->input('id'))->first();
+
+        $asset->asset_number = $request->input('asset_number');
+        $asset->asset_name = $request->input('asset_name');
+        $asset->kind_id = $request->input('asset_kind');
+        $asset->purchase_date = $request->input('purchase_date');
+        $asset->status = $request->input('asset_status');
+        $asset->added_by = Auth()->user()->id;
+
+        $asset->save();
+
+        return redirect('assets')->with('success', 'Asset Updated successfully!');
+    }
+
+    public function deleteAsset($id)
+    {
+        try {
+            $asset = Asset::findOrFail($id);
+            $asset->delete();
+            return redirect('assets')->with('success', 'Asset Deleted successfully!');
+        } catch (ModelNotFoundException $e) {
+            return redirect('assets')->with('error', 'Asset not found.');
+        }
     }
 }

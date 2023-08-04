@@ -8,10 +8,7 @@
                     <div class="card-header">
                         <div class="row ${1| ,row-cols-2,row-cols-3, auto,justify-content-md-center,|}">
                             <div class="col  ">
-                                {{ __('Register Assets') }}
-                            </div>
-                            <div class="col-md-5  ">
-                                <a href="" class="btn btn-primary">{{ __('Upload From Excel') }}</a>
+                                {{ __('Update Assets Details') }}
                             </div>
                         </div>
                     </div>
@@ -44,19 +41,21 @@
                             </div>
                         @endif
 
-                        <form action="{{ route('saveregisteredAsset') }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('updateAsset') }}" method="post" enctype="multipart/form-data">
                             @csrf
+                            <input type="text" value="{{ $asset->id }}" name="id" hidden>
+
                             <div class="form-group">
                                 <label for="">Asset Name</label>
                                 <input type="text" name="asset_name" required id=""
-                                    value="{{ old('asset_name') }}" class="form-control" placeholder="Asset Name"
+                                    value="{{ $asset->asset_name }}" class="form-control" placeholder="Asset Name"
                                     aria-describedby="helpId">
                             </div>
                             <br>
                             <div class="form-group">
                                 <label for="">Asset Number</label>
                                 <input type="text" name="asset_number" required id=""
-                                    value="{{ old('asset_number') }}" class="form-control" placeholder="Asset Number"
+                                    value="{{ $asset->asset_number }}" class="form-control" placeholder="Asset Number"
                                     aria-describedby="helpId">
                             </div>
                             <br>
@@ -65,7 +64,7 @@
                                 <select type="date" name="asset_kind" required id=""
                                     value="{{ old('asset_kind') }}" class="form-control" placeholder="Asset Kind"
                                     aria-describedby="helpId">
-                                    <option value="" selected>Select Asset Kind</option>
+                                    <option value="{{ $asset->kind_id }}" selected>{{ $asset->kind->name }}</option>
                                     @foreach ($kinds as $item)
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach
@@ -75,7 +74,7 @@
                             <div class="form-group">
                                 <label for="">Purchase Date</label>
                                 <input type="date" name="purchase_date" required id="purchase_date"
-                                    value="{{ old('purchase_date') }}" class="form-control" placeholder="Purchase Date"
+                                    value="{{ $asset->purchase_date }}" class="form-control" placeholder="Purchase Date"
                                     aria-describedby="helpId" max="{{ date('Y-m-d') }}">
                             </div>
 
@@ -85,6 +84,7 @@
                                 <select type="date" name="asset_status" required id=""
                                     value="{{ old('asset_status') }}" class="form-control" placeholder="Asset Status"
                                     aria-describedby="helpId">
+                                    <option value="{{ $asset->status }}">{{ $asset->status }}</option>
                                     <option value="Active" selected>Active</option>
                                     <option value="Inactive">Inactive</option>
                                 </select>
@@ -92,7 +92,7 @@
                             <br>
                             <div class="row ${1| ,row-cols-2,row-cols-3, auto,justify-content-md-center,|}">
                                 <div class="col-md-2  ">
-                                    <button class="btn btn-primary" type="submit">Register</button>
+                                    <button class="btn btn-primary" type="submit">Update</button>
                                 </div>
                                 <div class="col-md-2  ">
                                     <a href="{{ route('users') }}" class="btn btn-danger">Cancel</a>
