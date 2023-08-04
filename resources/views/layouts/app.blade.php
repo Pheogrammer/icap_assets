@@ -43,6 +43,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('users') }}">{{ __('Users') }}</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('assets') }}">{{ __('Assets') }}</a>
+                            </li>
                         </ul>
                     @endguest
                     <!-- Right Side Of Navbar -->

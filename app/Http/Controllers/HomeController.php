@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Asset;
+use App\Models\Kind;
 
 class HomeController extends Controller
 {
@@ -52,4 +54,16 @@ class HomeController extends Controller
         $user->save();
         return redirect('users')->with('success', 'User registered successfully!');
     }
+    public function assets()
+    {
+        $assets = Asset::all();
+        return view('assets', compact('assets'));
+    }
+    public function registerNewAsset()
+    {
+        $kinds = Kind::all();
+        return view('registerAssets', compact('kinds'));
+    }
+
+    
 }

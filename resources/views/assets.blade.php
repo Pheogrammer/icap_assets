@@ -8,10 +8,10 @@
                     <div class="card-header">
                         <div class="row ${1| ,row-cols-2,row-cols-3, auto,justify-content-md-center,|}">
                             <div class="col">
-                                {{ __('Registered Users') }}
+                                {{ __('Registered Assets') }}
                             </div>
                             <div class="col">
-                                <a href="{{ route('registerNewUser') }}" class="btn btn-primary float-end">Add New User</a>
+                                <a href="{{ route('registerNewAsset') }}" class="btn btn-primary float-end">Add New Asset</a>
                             </div>
                         </div>
                     </div>
@@ -44,7 +44,9 @@
                                 <tr>
                                     <th>SN</th>
                                     <th>Name</th>
-                                    <th>Email</th>
+                                    <th>Kind</th>
+                                    <th>Purchased On</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -52,13 +54,16 @@
                                 @php
                                     $i = 1;
                                 @endphp
-                                @foreach ($users as $item)
+                                @foreach ($assets as $item)
                                     <tr>
                                         <td>{{ $i }}</td>
-                                        <td>{{ $item->name }}</td>
-                                        <td>{{ $item->email }}</td>
+                                        <td>{{ $item->assetName }}</td>
+                                        <td>{{ $item->kind }}</td>
+                                        <td>{{ $item->purchase_date }}</td>
+                                        <td>{{ $item->status }}</td>
                                         <td>
                                             <a href="" class="btn btn-primary">Edit</a>
+                                            <a href="" class="btn btn-danger">Delete</a>
                                         </td>
                                         @php
                                             $i++;
@@ -67,6 +72,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+
                     </div>
                 </div>
             </div>
